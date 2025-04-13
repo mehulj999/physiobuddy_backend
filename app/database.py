@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # PostgreSQL database URL
-DATABASE_URL = "postgresql://root:root@localhost/physiobuddy_app"
+DATABASE_URL = "postgresql://postgres:admin@localhost:5432/physiobuddy_app"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
