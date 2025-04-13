@@ -70,3 +70,9 @@ coverage.xml
 
 # Windows-specific
 Thumbs.db
+app/database.py
+/app/__pycache__
+/physiobuddy/Lib
+/physiobuddy/Scripts
+/physiobuddy/Include/site/python3.12/greenlet
+physiobuddy/pyvenv.cfg
