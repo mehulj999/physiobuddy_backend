@@ -84,7 +84,8 @@ Set your DB credentials in `app/database.py` or via environment variables if you
 ### 5. Create database tables
 
 ```bash
-python create_tables.py
+# In root directory
+python -m app.create_tables   
 ```
 
 ---

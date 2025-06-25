@@ -14,7 +14,7 @@ from datetime import datetime
 import enum
 
 # Import Base from database.py instead of creating a new one
-from .database import Base
+from app.database import Base
 
 
 class ExerciseType(str, enum.Enum):
