@@ -76,3 +76,6 @@ app/database.py
 /physiobuddy/Scripts
 /physiobuddy/Include/site/python3.12/greenlet
 physiobuddy/pyvenv.cfg
+
+# Configuration files
+config.py
