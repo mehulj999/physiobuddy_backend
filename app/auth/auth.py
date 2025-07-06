@@ -15,11 +15,11 @@ SECRET_KEY = "your-secret-key-here"  # Change this in production!
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-# Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing - using sha256_crypt to avoid bcrypt compatibility issues
+pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
 
 # OAuth2 scheme
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 router = APIRouter()
 
@@ -72,17 +72,24 @@ async def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
+        print(f"DEBUG: Attempting to decode token: {token[:20]}...")
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(f"DEBUG: Token payload: {payload}")
         email: str = payload.get("sub")
         if email is None:
+            print(f"DEBUG: No 'sub' found in token payload")
             raise credentials_exception
         token_data = TokenData(email=email)
-    except JWTError:
+        print(f"DEBUG: Token validated for email: {email}")
+    except JWTError as e:
+        print(f"DEBUG: JWT decode error: {e}")
         raise credentials_exception
 
     user = get_user_by_email(db, email=token_data.email)
     if user is None:
+        print(f"DEBUG: User not found in database for email: {token_data.email}")
         raise credentials_exception
+    print(f"DEBUG: User found: {user.email}")
     return user
 
 
